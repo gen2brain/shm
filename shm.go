@@ -58,7 +58,8 @@ const (
 // A new shared memory segment is created if key has the value IPC_PRIVATE or key isn't IPC_PRIVATE,
 // no shared memory segment corresponding to key exists, and IPC_CREAT is specified in shmFlg.
 //
-// If shmFlg specifies both IPC_CREAT and IPC_EXCL and a shared memory segment already exists for key, then Get() fails with errno set to EEXIST.
+// If shmFlg specifies both IPC_CREAT and IPC_EXCL and a shared memory segment already exists for key,
+// then Get() fails with errno set to EEXIST.
 func Get(key int, size int, shmFlg int) (shmId int, err error) {
 	id, _, errno := syscall.Syscall(syscall.SYS_SHMGET, uintptr(int32(key)), uintptr(int32(size)), uintptr(int32(shmFlg)))
 	if int(id) == -1 {
