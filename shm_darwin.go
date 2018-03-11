@@ -31,13 +31,13 @@ type IdDs struct {
 	// Number of current attaches.
 	Nattch uint16
 	// Padding.
-	Pad_cgo_0 [2]byte
+	PadCgo0 [2]byte
 	// Padding.
-	Pad_cgo_1 [8]byte
+	PadCgo1 [8]byte
 	// Padding.
-	Pad_cgo_2 [8]byte
+	PadCgo2 [8]byte
 	// Padding.
-	Pad_cgo_3 [8]byte
+	PadCgo3 [8]byte
 	// Padding.
-	Pad_cgo_4 [8]byte
+	PadCgo4 [8]byte
 }

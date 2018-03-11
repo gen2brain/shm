@@ -15,17 +15,17 @@ type Perm struct {
 	// Read/write permission.
 	Mode uint16
 	// Padding.
-	X__pad1 uint16
+	Pad1 uint16
 	// Sequence number.
 	Seq uint16
 	// Padding.
-	X__pad2 uint16
+	Pad2 uint16
 	// Padding.
-	Pad_cgo_0 [4]byte
+	PadCgo0 [4]byte
 	// Reserved.
-	X__glibc_reserved1 uint64
+	GlibcReserved1 uint64
 	// Reserved.
-	X__glibc_reserved2 uint64
+	GlibcReserved2 uint64
 }
 
 // IdDs describes shared memory segment.
@@ -47,7 +47,7 @@ type IdDs struct {
 	// Number of current attaches.
 	Nattch uint64
 	// Reserved.
-	X__glibc_reserved4 uint64
+	GlibcReserved4 uint64
 	// Reserved.
-	X__glibc_reserved5 uint64
+	GlibcReserved5 uint64
 }
