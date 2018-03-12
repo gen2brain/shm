@@ -87,7 +87,7 @@ func At(shmId int, shmAddr uintptr, shmFlg int) (data []byte, err error) {
 		addr uintptr
 		len  int
 		cap  int
-	}{addr, length, length}
+	}{addr, int(length), int(length)}
 
 	data = *(*[]byte)(unsafe.Pointer(&b))
 	return data, nil

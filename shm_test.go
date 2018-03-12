@@ -22,7 +22,7 @@ func TestShm(t *testing.T) {
 		t.Errorf("Size: %v", err)
 	}
 
-	if size != shmSize {
+	if int(size) != shmSize {
 		t.Errorf("Wrong size got %d expected %d", size, shmSize)
 	}
 
