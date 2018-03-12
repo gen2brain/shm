@@ -124,7 +124,7 @@ func Rm(shmId int) error {
 }
 
 // Size returns size of shared memory segment.
-func Size(shmId int) (int, error) {
+func Size(shmId int) (int64, error) {
 	var idDs IdDs
 
 	_, err := Ctl(shmId, IPC_STAT, &idDs)
@@ -132,5 +132,5 @@ func Size(shmId int) (int, error) {
 		return 0, err
 	}
 
-	return int(idDs.SegSz), nil
+	return int64(idDs.SegSz), nil
 }
