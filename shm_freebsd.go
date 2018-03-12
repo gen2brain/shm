@@ -2,7 +2,6 @@ package shm
 
 // System call constants.
 const (
-	sysShm    = 0
 	sysShmAt  = 228
 	sysShmCtl = 229
 	sysShmDt  = 230

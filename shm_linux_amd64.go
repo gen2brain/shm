@@ -6,7 +6,6 @@ import (
 
 // System call constants.
 const (
-	sysShm    = 0
 	sysShmAt  = syscall.SYS_SHMAT
 	sysShmCtl = syscall.SYS_SHMCTL
 	sysShmDt  = syscall.SYS_SHMDT
