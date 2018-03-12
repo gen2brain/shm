@@ -1,25 +1,5 @@
 language: go
 
-env:
-  global:
-    - GOARCH=amd64
-matrix:
-  include:
-    - os: osx
-      env: GOOS=darwin
-    - os: linux
-      env: GOOS=dragonfly
-    - os: linux
-      env: GOOS=freebsd
-    - os: linux
-      env: GOOS=linux
-    - os: linux
-      env: GOOS=netbsd
-    - os: linux
-      env: GOOS=openbsd
-    - os: linux
-      env: GOOS=solaris
-
 go:
   - master
 
