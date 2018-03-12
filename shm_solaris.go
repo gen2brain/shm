@@ -127,7 +127,7 @@ const (
 // If shmFlg specifies both IPC_CREAT and IPC_EXCL and a shared memory segment already exists for key,
 // then Get() fails with errno set to EEXIST.
 func Get(key int, size int, shmFlg int) (shmId int, err error) {
-	id, _, errno := syscall.Syscall6(sysShm, sysShmGet, uintptr(int32(key)), uintptr(int32(size)), uintptr(int32(shmFlg)), 0)
+	id, _, errno := syscall.Syscall6(sysShm, sysShmGet, uintptr(int32(key)), uintptr(int32(size)), uintptr(int32(shmFlg)), 0, 0)
 	if int(id) == -1 {
 		return -1, errno
 	}
@@ -139,7 +139,7 @@ func Get(key int, size int, shmFlg int) (shmId int, err error) {
 //
 // Using At() with shmAddr equal to NULL is the preferred, portable way of attaching a shared memory segment.
 func At(shmId int, shmAddr uintptr, shmFlg int) (data []byte, err error) {
-	addr, _, errno := syscall.Syscall6(sysShm, sysShmAt, uintptr(int32(shmId)), shmAddr, uintptr(int32(shmFlg)), 0)
+	addr, _, errno := syscall.Syscall6(sysShm, sysShmAt, uintptr(int32(shmId)), shmAddr, uintptr(int32(shmFlg)), 0, 0)
 	if int(addr) == -1 {
 		return nil, errno
 	}
@@ -153,7 +153,7 @@ func At(shmId int, shmAddr uintptr, shmFlg int) (data []byte, err error) {
 		addr uintptr
 		len  int
 		cap  int
-	}{addr, length, length}
+	}{addr, int(length), int(length)}
 
 	data = *(*[]byte)(unsafe.Pointer(&b))
 	return data, nil
@@ -163,7 +163,7 @@ func At(shmId int, shmAddr uintptr, shmFlg int) (data []byte, err error) {
 //
 // The to-be-detached segment must be currently attached with shmAddr equal to the value returned by the attaching At() call.
 func Dt(data []byte) error {
-	result, _, errno := syscall.Syscall6(sysShm, sysShmDt, uintptr(unsafe.Pointer(&data[0])), 0, 0, 0)
+	result, _, errno := syscall.Syscall6(sysShm, sysShmDt, uintptr(unsafe.Pointer(&data[0])), 0, 0, 0, 0)
 	if int(result) == -1 {
 		return errno
 	}
@@ -175,7 +175,7 @@ func Dt(data []byte) error {
 //
 // The buf argument is a pointer to a IdDs structure.
 func Ctl(shmId int, cmd int, buf *IdDs) (int, error) {
-	result, _, errno := syscall.Syscall6(sysShm, sysShmCtl, uintptr(int32(shmId)), uintptr(int32(cmd)), uintptr(unsafe.Pointer(buf)), 0)
+	result, _, errno := syscall.Syscall6(sysShm, sysShmCtl, uintptr(int32(shmId)), uintptr(int32(cmd)), uintptr(unsafe.Pointer(buf)), 0, 0)
 	if int(result) == -1 {
 		return -1, errno
 	}
