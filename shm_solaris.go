@@ -106,11 +106,11 @@ const (
 	// Control commands for `shmctl`.
 
 	// Remove identifier.
-	IPC_RMID = 0
+	IPC_RMID = 10
 	// Set `ipc_perm` options.
-	IPC_SET = 1
+	IPC_SET = 11
 	// Get `ipc_perm' options.
-	IPC_STAT = 2
+	IPC_STAT = 12
 )
 
 // Get allocates a shared memory segment.
