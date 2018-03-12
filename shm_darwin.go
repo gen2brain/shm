@@ -1,5 +1,18 @@
 package shm
 
+import (
+	"syscall"
+)
+
+// System call constants.
+const (
+	sysShm    = 0
+	sysShmAt  = syscall.SYS_SHMAT
+	sysShmCtl = syscall.SYS_SHMCTL
+	sysShmDt  = syscall.SYS_SHMDT
+	sysShmGet = syscall.SYS_SHMGET
+)
+
 // Perm is used to pass permission information to IPC operations.
 type Perm struct {
 	// Owner's user ID.

@@ -1,12 +1,76 @@
-// +build darwin dragonfly linux netbsd openbsd
-
-// Package shm implements System V shared memory functions (shmctl, shmget, shmat, shmdt).
 package shm
 
 import (
 	"syscall"
 	"unsafe"
 )
+
+// Constants.
+const (
+	sysShm    = 52
+	sysShmAt  = 0
+	sysShmCtl = 1
+	sysShmDt  = 2
+	sysShmGet = 3
+)
+
+// Perm is used to pass permission information to IPC operations.
+type Perm struct {
+	// Owner's user ID.
+	Uid uint32
+	// Owner's group ID.
+	Gid uint32
+	// Creator's user ID.
+	Cuid uint32
+	// Creator's group ID.
+	Cgid uint32
+	// Read/write permission.
+	Mode uint32
+	// Sequence number.
+	Seq uint32
+	// Key.
+	Key int32
+}
+
+// IdDs describes shared memory segment.
+type IdDs struct {
+	// Operation permission struct.
+	Perm Perm
+	// Padding.
+	PadCgo0 [4]byte
+	// Size of segment in bytes.
+	SegSz uint64
+	// Flags.
+	Flags uint64
+	// Internal.
+	Lkcnt uint16
+	// Padding.
+	PadCgo1 [2]byte
+	// Pid of last shmat/shmdt.
+	Lpid int32
+	// Pid of creator.
+	Cpid int32
+	// Padding.
+	PadCgo2 [4]byte
+	// Number of current attaches.
+	Nattch uint64
+	// Internal.
+	Cnattch uint64
+	// Last attach time.
+	Atime int64
+	// Last detach time.
+	Dtime int64
+	// Last change time.
+	Ctime int64
+	// Internal.
+	Amp *byte
+	// Internal.
+	Gransize uint64
+	// Internal.
+	Allocated uint64
+	// Padding.
+	Pad4 [1]int64
+}
 
 // Constants.
 const (
@@ -61,7 +125,7 @@ const (
 // If shmFlg specifies both IPC_CREAT and IPC_EXCL and a shared memory segment already exists for key,
 // then Get() fails with errno set to EEXIST.
 func Get(key int, size int, shmFlg int) (shmId int, err error) {
-	id, _, errno := syscall.Syscall(sysShmGet, uintptr(int32(key)), uintptr(int32(size)), uintptr(int32(shmFlg)))
+	id, _, errno := syscall.Syscall6(sysShm, sysShmGet, uintptr(int32(key)), uintptr(int32(size)), uintptr(int32(shmFlg)), 0)
 	if int(id) == -1 {
 		return -1, errno
 	}
@@ -73,7 +137,7 @@ func Get(key int, size int, shmFlg int) (shmId int, err error) {
 //
 // Using At() with shmAddr equal to NULL is the preferred, portable way of attaching a shared memory segment.
 func At(shmId int, shmAddr uintptr, shmFlg int) (data []byte, err error) {
-	addr, _, errno := syscall.Syscall(sysShmAt, uintptr(int32(shmId)), shmAddr, uintptr(int32(shmFlg)))
+	addr, _, errno := syscall.Syscall6(sysShm, sysShmAt, uintptr(int32(shmId)), shmAddr, uintptr(int32(shmFlg)), 0)
 	if int(addr) == -1 {
 		return nil, errno
 	}
@@ -97,7 +161,7 @@ func At(shmId int, shmAddr uintptr, shmFlg int) (data []byte, err error) {
 //
 // The to-be-detached segment must be currently attached with shmAddr equal to the value returned by the attaching At() call.
 func Dt(data []byte) error {
-	result, _, errno := syscall.Syscall(sysShmDt, uintptr(unsafe.Pointer(&data[0])), 0, 0)
+	result, _, errno := syscall.Syscall6(sysShm, sysShmDt, uintptr(unsafe.Pointer(&data[0])), 0, 0, 0)
 	if int(result) == -1 {
 		return errno
 	}
@@ -109,7 +173,7 @@ func Dt(data []byte) error {
 //
 // The buf argument is a pointer to a IdDs structure.
 func Ctl(shmId int, cmd int, buf *IdDs) (int, error) {
-	result, _, errno := syscall.Syscall(sysShmCtl, uintptr(int32(shmId)), uintptr(int32(cmd)), uintptr(unsafe.Pointer(buf)))
+	result, _, errno := syscall.Syscall6(sysShm, sysShmCtl, uintptr(int32(shmId)), uintptr(int32(cmd)), uintptr(unsafe.Pointer(buf)), 0)
 	if int(result) == -1 {
 		return -1, errno
 	}
