@@ -1,4 +1,4 @@
-// +build solaris,!syscall
+// +build solaris
 
 package shm
 
