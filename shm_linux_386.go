@@ -1,15 +1,11 @@
 package shm
 
-import (
-	"syscall"
-)
-
 // System call constants.
 const (
-	sysShmAt  = syscall.SYS_SHMAT
-	sysShmCtl = syscall.SYS_SHMCTL
-	sysShmDt  = syscall.SYS_SHMDT
-	sysShmGet = syscall.SYS_SHMGET
+	sysShmAt  = 30
+	sysShmCtl = 31
+	sysShmDt  = 67
+	sysShmGet = 29
 )
 
 // Perm is used to pass permission information to IPC operations.
