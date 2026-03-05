@@ -2,10 +2,10 @@ package shm
 
 // System call constants.
 const (
-	sysShmAt  = 30
-	sysShmCtl = 31
-	sysShmDt  = 67
-	sysShmGet = 29
+	sysShmAt  = 397
+	sysShmCtl = 396
+	sysShmDt  = 398
+	sysShmGet = 395
 )
 
 // Perm is used to pass permission information to IPC operations.
