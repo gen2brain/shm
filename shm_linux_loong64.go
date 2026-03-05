@@ -1,3 +1,5 @@
+//go:build linux && loong64
+
 package shm
 
 import (

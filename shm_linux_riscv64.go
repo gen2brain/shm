@@ -1,3 +1,5 @@
+//go:build linux && riscv64
+
 package shm
 
 import (

@@ -1,3 +1,5 @@
+//go:build linux && ppc64le
+
 package shm
 
 // System call constants.

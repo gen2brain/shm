@@ -1,3 +1,5 @@
+//go:build linux && 386
+
 package shm
 
 // System call constants.

@@ -1,3 +1,5 @@
+//go:build linux && s390x
+
 package shm
 
 // System call constants.
