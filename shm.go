@@ -1,4 +1,4 @@
-// +build darwin dragonfly freebsd linux netbsd openbsd
+//go:build darwin || dragonfly || freebsd || linux || netbsd || openbsd
 
 // Package shm implements System V shared memory functions (shmctl, shmget, shmat, shmdt).
 package shm
